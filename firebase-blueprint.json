@@ -1,0 +1,144 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Public and private user profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Paper": {
+      "title": "Research Paper",
+      "description": "Metadata for a research paper uploaded by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "abstract": { "type": "string" },
+        "keyContributions": { "type": "array", "items": { "type": "string" } },
+        "methodology": { "type": "string" },
+        "results": { "type": "string" },
+        "limitations": { "type": "string" },
+        "futureWork": { "type": "string" },
+        "architectureDescription": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["processing", "completed", "error"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "createdAt"]
+    },
+    "PaperChunk": {
+      "title": "Paper Content Chunk",
+      "description": "A chunk of text from a paper used for RAG",
+      "type": "object",
+      "properties": {
+        "paperId": { "type": "string" },
+        "content": { "type": "string" },
+        "pageIndex": { "type": "number" },
+        "embedding": { "type": "array", "items": { "type": "number" } }
+      },
+      "required": ["paperId", "content"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message in a paper-specific chat session",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "paperId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "sources": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["userId", "paperId", "role", "content", "createdAt"]
+    },
+    "Quiz": {
+      "title": "Generated Quiz",
+      "description": "A multiple choice quiz generated from a paper",
+      "type": "object",
+      "properties": {
+        "paperId": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "options": { "type": "array", "items": { "type": "string" } },
+              "correctAnswer": { "type": "number" },
+              "explanation": { "type": "string" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["paperId", "userId", "questions"]
+    },
+    "Flashcard": {
+      "title": "Generated Flashcard",
+      "description": "A flashcard generated from a paper",
+      "type": "object",
+      "properties": {
+        "paperId": { "type": "string" },
+        "userId": { "type": "string" },
+        "front": { "type": "string" },
+        "back": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["paperId", "userId", "front", "back"]
+    },
+    "Activity": {
+      "title": "User Activity",
+      "description": "Log of user actions for progress tracking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["upload", "chat", "quiz", "flashcard"] },
+        "description": { "type": "string" },
+        "paperId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "description", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "users/{userId}/activity/{activityId}": {
+      "schema": "Activity",
+      "description": "User activity logs"
+    },
+    "papers/{paperId}": {
+      "schema": "Paper",
+      "description": "Research papers metadata"
+    },
+    "papers/{paperId}/chunks/{chunkId}": {
+      "schema": "PaperChunk",
+      "description": "Chunks of paper text for RAG"
+    },
+    "papers/{paperId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Chat history for a paper"
+    },
+    "papers/{paperId}/quizzes/{quizId}": {
+      "schema": "Quiz",
+      "description": "Generated quizzes"
+    },
+    "papers/{paperId}/flashcards/{flashcardId}": {
+      "schema": "Flashcard",
+      "description": "Generated flashcards"
+    }
+  }
+}

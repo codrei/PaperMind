@@ -1,0 +1,6 @@
+{
+  "name": "PaperMind AI",
+  "description": "AI Research Paper Explainer and Study Assistant for Computer Science and ML students. Upload PDFs, get summaries, chat with papers, and generate flashcards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
