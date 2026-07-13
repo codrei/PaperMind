@@ -1,31 +1,33 @@
-import { GoogleGenAI } from "@google/genai";
+// All Gemini calls go through /api/generate (a Vercel serverless function),
+// so the API key never ships to the browser.
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-if (!apiKey) {
-  console.warn("VITE_GEMINI_API_KEY is not set. AI features will not work.");
-}
-
-export const ai = new GoogleGenAI({ apiKey: apiKey || '' });
-
-// Model IDs verified against the Gemini ListModels endpoint (2026-07).
 export const MODELS = {
   text: "gemini-3.5-flash",
   pro: "gemini-3.1-pro-preview",
-  embedding: "gemini-embedding-001",
 };
 
-/** Single entry point for text generation on the current @google/genai SDK. */
+/** Single entry point for text generation, proxied through the backend. */
 export async function generateText(
   prompt: string,
   opts: { json?: boolean; model?: string } = {},
 ): Promise<string> {
-  const response = await ai.models.generateContent({
-    model: opts.model ?? MODELS.text,
-    contents: prompt,
-    ...(opts.json ? { config: { responseMimeType: "application/json" } } : {}),
+  const res = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      prompt,
+      json: opts.json === true,
+      ...(opts.model ? { model: opts.model } : {}),
+    }),
   });
-  return response.text ?? "";
+  const data = (await res.json().catch(() => ({}))) as {
+    text?: string;
+    error?: string;
+  };
+  if (!res.ok) {
+    throw new Error(data.error || `Generation failed (${res.status})`);
+  }
+  return data.text ?? "";
 }
 
 /**
