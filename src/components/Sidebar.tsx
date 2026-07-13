@@ -153,10 +153,13 @@ export function Sidebar({ papers, onSelectPaper, selectedPaperId, theme, toggleT
           </button>
         </div>
       </div>
+    </aside>
 
+      {/* Modals live OUTSIDE <aside>: the aside has a transform (translate-x),
+          which would otherwise trap these fixed-positioned overlays inside the
+          sidebar column instead of centering them over the whole screen. */}
       <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
       <ActivityLog isOpen={isActivityOpen} onClose={() => setIsActivityOpen(false)} />
-    </aside>
     </>
   );
 }
