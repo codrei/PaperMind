@@ -112,10 +112,10 @@ Return ONLY the JSON.`;
       return (
         <div className="p-10 max-w-2xl mx-auto flex flex-col items-center justify-center h-full text-center space-y-12">
            <div className="relative">
-             <div className="p-8 bg-indigo-600/10 rounded-full border border-indigo-500/20 shadow-2xl animate-pulse">
-               <Trophy className="w-20 h-20 text-indigo-500" />
+             <div className="p-8 bg-accent-soft rounded-full border border-accent/30 shadow-2xl animate-pulse">
+               <Trophy className="w-20 h-20 text-accent-ink" />
              </div>
-             <div className="absolute -top-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-background text-white">
+             <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center border-4 border-background text-accent-fg">
                 <CheckCircle2 className="w-4 h-4" />
              </div>
            </div>
@@ -129,13 +129,13 @@ Return ONLY the JSON.`;
            <div className="flex gap-6">
              <button 
               onClick={() => startQuiz(activeQuiz)}
-              className="flex items-center gap-2 px-8 py-3 bg-background border border-border text-muted-foreground hover:text-foreground rounded-full font-bold transition-all uppercase tracking-widest text-[10px]"
+              className="flex items-center gap-2 px-8 py-3 bg-background border border-border text-muted-foreground hover:text-foreground rounded-full font-bold transition-all text-[10px]"
              >
                Retake Analysis
              </button>
              <button 
               onClick={() => setActiveQuiz(null)}
-              className="flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold transition-all shadow-xl shadow-indigo-600/30 uppercase tracking-widest text-[10px]"
+              className="flex items-center gap-2 px-8 py-3 bg-accent hover:bg-accent-hover text-accent-fg rounded-full font-bold transition-all shadow-xl text-[10px]"
              >
                Return to Library
              </button>
@@ -149,17 +149,17 @@ Return ONLY the JSON.`;
     return (
       <div className="p-10 max-w-3xl mx-auto space-y-10">
         <div className="flex items-center justify-between border-b border-border pb-6">
-          <button onClick={() => setActiveQuiz(null)} className="text-muted-foreground hover:text-foreground text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 transition-colors">
+          <button onClick={() => setActiveQuiz(null)} className="text-muted-foreground hover:text-foreground text-[10px] font-bold flex items-center gap-2 transition-colors">
             <ChevronRight className="w-4 h-4 rotate-180" /> Abandon Quiz
           </button>
-          <div className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground font-mono">
+          <div className="text-[10px] font-bold text-muted-foreground font-mono">
             Vector {currentQuestionIdx + 1} / {activeQuiz.questions.length}
           </div>
         </div>
 
         <div className="space-y-8">
           <div className="space-y-3">
-             <span className="text-[10px] text-indigo-500 font-bold uppercase tracking-widest">Inquiry Vector</span>
+             <span className="text-[10px] text-accent-ink font-bold">Inquiry Vector</span>
              <h3 className="text-2xl font-bold leading-tight text-foreground font-serif">{question.question}</h3>
           </div>
           
@@ -171,14 +171,14 @@ Return ONLY the JSON.`;
                 className={cn(
                   "p-6 text-left rounded-2xl border transition-all text-sm font-medium relative group",
                   selectedOption === i 
-                    ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20" 
+                    ? "bg-accent border-accent text-accent-fg shadow-lg " 
                     : "bg-muted border-border text-foreground/80 hover:border-muted-foreground/30 hover:bg-muted/50"
                 )}
               >
                 <div className="flex items-center gap-4">
                   <div className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold border shrink-0 transition-colors",
-                    selectedOption === i ? "bg-white text-indigo-600 border-white" : "bg-background border-border text-muted-foreground"
+                    selectedOption === i ? "bg-white text-accent-ink border-white" : "bg-background border-border text-muted-foreground"
                   )}>
                     {String.fromCharCode(65 + i)}
                   </div>
@@ -193,7 +193,7 @@ Return ONLY the JSON.`;
           <button
             disabled={selectedOption === null}
             onClick={handleNext}
-            className="flex items-center gap-3 px-10 py-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-full font-bold transition-all shadow-xl shadow-indigo-600/30 uppercase tracking-[0.25em] text-[10px]"
+            className="flex items-center gap-3 px-10 py-4 bg-accent hover:bg-accent-hover disabled:opacity-50 text-accent-fg rounded-full font-bold transition-all shadow-xl text-[10px]"
           >
             {currentQuestionIdx === activeQuiz.questions.length - 1 ? 'Finalize Synthesis' : 'Next Vector'}
             <ChevronRight className="w-4 h-4" />
@@ -207,8 +207,8 @@ Return ONLY the JSON.`;
     <div className="p-10 max-w-5xl mx-auto space-y-12 pb-32">
       <div className="flex items-center justify-between border-b border-border pb-8">
         <div className="flex items-center gap-5">
-          <div className="w-12 h-12 bg-indigo-600/10 rounded-full flex items-center justify-center border border-indigo-500/20 shadow-inner">
-            <ListChecks className="w-6 h-6 text-indigo-500" />
+          <div className="w-12 h-12 bg-accent-soft rounded-full flex items-center justify-center border border-accent/30 shadow-inner">
+            <ListChecks className="w-6 h-6 text-accent-ink" />
           </div>
           <div className="space-y-1">
             <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Comprehension Vectors</h2>
@@ -218,7 +218,7 @@ Return ONLY the JSON.`;
         <button 
           onClick={generateQuiz}
           disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full text-[10px] font-bold transition-all shadow-lg shadow-indigo-600/30 uppercase tracking-widest text-white"
+          className="flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover rounded-full text-[10px] font-bold transition-all shadow-lg text-accent-fg"
         >
           {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
           Construct Exercise
@@ -227,28 +227,28 @@ Return ONLY the JSON.`;
 
       <div className="grid grid-cols-1 gap-6">
         {quizzes.length === 0 && !loading ? (
-          <div className="text-center py-32 bg-muted/20 rounded-3xl border border-dashed border-border flex flex-col items-center justify-center gap-6">
+          <div className="text-center py-32 bg-muted/20 rounded-xl border border-dashed border-border flex flex-col items-center justify-center gap-6">
              <PlayCircle className="w-16 h-16 text-muted" />
              <div className="space-y-1">
                <p className="text-muted-foreground font-serif text-xl">No Assessments Pending</p>
-               <p className="text-[10px] text-muted-foreground/60 uppercase tracking-widest">Generate a quiz to verify your neural mapping of this manuscript</p>
+               <p className="text-[10px] text-muted-foreground/60">Generate a quiz to verify your neural mapping of this manuscript</p>
              </div>
           </div>
         ) : (
           quizzes.map((quiz) => (
-            <div key={quiz.id} className="group bg-card border border-border p-8 rounded-3xl flex items-center justify-between gap-6 hover:border-indigo-500/40 hover:shadow-sm transition-all shadow-sm">
+            <div key={quiz.id} className="group bg-card border border-border p-8 rounded-xl flex items-center justify-between gap-6 hover:border-accent/40 hover:shadow-sm transition-all shadow-sm">
               <div className="flex items-center gap-5">
-                <div className="p-4 bg-muted rounded-2xl ring-1 ring-border group-hover:ring-indigo-500/30 transition-all">
-                  <ListChecks className="w-6 h-6 text-muted-foreground group-hover:text-indigo-500 transition-colors" />
+                <div className="p-4 bg-muted rounded-2xl ring-1 ring-border group-hover:ring-accent/30 transition-all">
+                  <ListChecks className="w-6 h-6 text-muted-foreground group-hover:text-accent-ink transition-colors" />
                 </div>
                 <div>
                   <h3 className="font-bold text-xl text-foreground font-serif">{quiz.title || 'Paper Comprehension Quiz'}</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono mt-1">{quiz.questions.length} Discrete Logical Questions</p>
+                  <p className="text-[10px] text-muted-foreground font-mono mt-1">{quiz.questions.length} Discrete Logical Questions</p>
                 </div>
               </div>
               <button 
                 onClick={() => startQuiz(quiz)}
-                className="px-8 py-3 bg-background border border-border hover:border-muted-foreground/30 text-muted-foreground hover:text-foreground rounded-full text-[10px] font-bold transition-all uppercase tracking-widest"
+                className="px-8 py-3 bg-background border border-border hover:border-muted-foreground/30 text-muted-foreground hover:text-foreground rounded-full text-[10px] font-bold transition-all"
               >
                 Launch Assessment
               </button>

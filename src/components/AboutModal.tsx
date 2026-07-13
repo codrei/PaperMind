@@ -35,8 +35,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
             <div className="p-12 space-y-10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                  <Info className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center shadow-lg ">
+                  <Info className="w-6 h-6 text-accent-fg" />
                 </div>
                 <div>
                   <h2 className="text-3xl font-bold font-serif">About PaperMind</h2>
@@ -46,9 +46,9 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-indigo-500">
+                  <div className="flex items-center gap-3 text-accent-ink">
                     <Brain className="w-5 h-5" />
-                    <h3 className="font-bold uppercase tracking-widest text-[10px]">Neural Synthesis</h3>
+                    <h3 className="font-bold text-[10px]">Neural Synthesis</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     PaperMind uses advanced language models to deconstruct complex research papers into digestible, high-level insights.
@@ -56,9 +56,9 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-emerald-500">
+                  <div className="flex items-center gap-3 text-accent-ink">
                     <Target className="w-5 h-5" />
-                    <h3 className="font-bold uppercase tracking-widest text-[10px]">Adaptive Practice</h3>
+                    <h3 className="font-bold text-[10px]">Adaptive Practice</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Verify your understanding through dynamically generated quizzes and flashcards tailored specifically to your data.
@@ -68,7 +68,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-amber-500">
                     <Zap className="w-5 h-5" />
-                    <h3 className="font-bold uppercase tracking-widest text-[10px]">Architecture Mapping</h3>
+                    <h3 className="font-bold text-[10px]">Architecture Mapping</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Automatically map model architectures, input spaces, and compute costs mentioned in technical manuscripts.
@@ -78,7 +78,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-rose-500">
                     <BookOpen className="w-5 h-5" />
-                    <h3 className="font-bold uppercase tracking-widest text-[10px]">Persistent Knowledge</h3>
+                    <h3 className="font-bold text-[10px]">Persistent Knowledge</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Your library is stored securely, allowing you to return to your research vectors and study materials at any time.
@@ -89,8 +89,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <div className="pt-8 border-t border-border space-y-6">
                 <div className="flex items-center justify-between gap-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20">
-                      <User className="w-5 h-5 text-indigo-500" />
+                    <div className="w-10 h-10 bg-accent-soft rounded-full flex items-center justify-center border border-accent/30">
+                      <User className="w-5 h-5 text-accent-ink" />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-foreground">Marco Andrei Belen</h4>
@@ -102,7 +102,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                   </div>
                 </div>
 
-                <div className="bg-indigo-500/5 border border-indigo-500/10 p-5 rounded-2xl">
+                <div className="bg-accent-soft border border-accent/20 p-5 rounded-2xl">
                   <p className="text-xs text-muted-foreground leading-relaxed italic font-serif">
                     "I built PaperMind as a tool to help fellow students and researchers navigate the overwhelming wave of academic literature. My goal is to save researchers time by synthesizing complex technical manuscripts into actionable insights."
                   </p>

@@ -122,19 +122,19 @@ Instructions:
       >
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-muted-foreground space-y-6 max-w-sm mx-auto text-center">
-            <div className="p-4 bg-background rounded-3xl border border-border shadow-md">
-              <Bot className="w-10 h-10 text-indigo-500" />
+            <div className="p-4 bg-background rounded-xl border border-border shadow-md">
+              <Bot className="w-10 h-10 text-accent-ink" />
             </div>
             <div className="space-y-2">
               <p className="text-lg font-serif text-foreground">Academic Dialogue Ready</p>
-              <p className="text-xs font-bold uppercase tracking-widest leading-loose">Deep analysis of "{paper.title}" finalized. Inquire within.</p>
+              <p className="text-xs font-bold leading-loose">Deep analysis of "{paper.title}" finalized. Inquire within.</p>
             </div>
             <div className="grid grid-cols-1 gap-3 w-full pt-6">
                {["What is the primary contribution?", "Deconstruct the methodology", "Synthesize the results"].map(q => (
                  <button 
                   key={q}
                   onClick={() => setInput(q)}
-                  className="text-xs p-3 bg-background border border-border rounded-full hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all font-bold uppercase tracking-tighter text-foreground"
+                  className="text-xs p-3 bg-background border border-border rounded-full hover:border-accent/50 hover:bg-accent-soft transition-all font-bold text-foreground"
                  >
                    {q}
                  </button>
@@ -155,13 +155,13 @@ Instructions:
           >
             <div className={cn(
               "p-2 rounded-xl border flex-shrink-0 shadow-sm",
-              message.role === 'user' ? "bg-muted border-border text-foreground" : "bg-indigo-600/10 border-indigo-500/20 text-indigo-500"
+              message.role === 'user' ? "bg-muted border-border text-foreground" : "bg-accent-soft border-accent/30 text-accent-ink"
             )}>
               {message.role === 'user' ? <UserIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5" /> : <Bot className="w-4 h-4 sm:w-4.5 sm:h-4.5" />}
             </div>
             
             <div className={cn(
-              "p-4 sm:p-5 rounded-2xl sm:rounded-3xl text-sm leading-relaxed shadow-sm",
+              "p-4 sm:p-5 rounded-2xl sm:rounded-xl text-sm leading-relaxed shadow-sm",
               message.role === 'user' 
                 ? "bg-card border border-border rounded-tr-none text-foreground font-medium" 
                 : "bg-muted/50 border border-border rounded-tl-none text-foreground/90 font-serif"
@@ -173,7 +173,7 @@ Instructions:
               </div>
               {message.role === 'assistant' && (
                 <div className="mt-4 pt-3 border-t border-border flex items-center gap-2">
-                   <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
+                   <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
                    <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest font-mono">Grounded Logic</span>
                 </div>
               )}
@@ -183,18 +183,18 @@ Instructions:
         {isLoading && (
           <div className="flex items-center gap-3 text-muted-foreground">
             <div className="flex gap-1">
-              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce"></span>
+              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce"></span>
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-widest">Assistant is synthesizing</span>
+            <span className="text-[10px] font-bold">Assistant is synthesizing</span>
           </div>
         )}
       </div>
 
       <div className="p-4 sm:p-8 border-t border-border bg-card/50">
         <form onSubmit={handleSend} className="max-w-4xl mx-auto flex items-end gap-3 sm:gap-4">
-          <div className="flex-1 bg-background border border-border rounded-2xl sm:rounded-3xl focus-within:ring-2 focus-within:ring-indigo-500/50 transition-all shadow-sm relative group">
+          <div className="flex-1 bg-background border border-border rounded-2xl sm:rounded-xl focus-within:ring-2 focus-within:ring-accent/40 transition-all shadow-sm relative group">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -212,14 +212,14 @@ Instructions:
                <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="p-2.5 sm:p-3 bg-indigo-600 text-white rounded-xl sm:rounded-2xl hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
+                className="p-2.5 sm:p-3 bg-accent text-accent-fg rounded-xl sm:rounded-2xl hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
               >
                 <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
         </form>
-        <p className="text-[9px] sm:text-[10px] text-center text-muted-foreground mt-4 sm:mt-6 uppercase tracking-[0.3em] font-bold">
+        <p className="text-[9px] sm:text-[10px] text-center text-muted-foreground mt-4 sm:mt-6 font-bold">
           Generative Research Core • Gemini 3 • RAG v2
         </p>
       </div>

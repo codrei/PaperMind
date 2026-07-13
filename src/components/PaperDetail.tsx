@@ -74,13 +74,13 @@ export function PaperDetail({ paper, onBack }: PaperDetailProps) {
         <div className="flex items-center gap-2 sm:gap-3 ml-11 sm:ml-0">
           <button 
             onClick={handleDownload}
-            className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold bg-background border border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground/30 rounded-full transition-all uppercase tracking-widest whitespace-nowrap"
+            className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold bg-background border border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground/30 rounded-full transition-all whitespace-nowrap"
           >
             <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> PDF
           </button>
           <button 
             onClick={handleShare}
-            className="flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition-all shadow-lg shadow-indigo-600/30 uppercase tracking-widest whitespace-nowrap"
+            className="flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold bg-accent hover:bg-accent-hover text-accent-fg rounded-full transition-all shadow-lg whitespace-nowrap"
           >
             <Share2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Share
           </button>
@@ -97,8 +97,8 @@ export function PaperDetail({ paper, onBack }: PaperDetailProps) {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "relative flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold transition-all whitespace-nowrap",
-                isActive ? "text-indigo-500" : "text-muted-foreground hover:text-foreground"
+                "relative flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 text-[9px] sm:text-[10px] font-bold transition-all whitespace-nowrap",
+                isActive ? "text-accent-ink" : "text-muted-foreground hover:text-foreground"
               )}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -106,7 +106,7 @@ export function PaperDetail({ paper, onBack }: PaperDetailProps) {
               {isActive && (
                 <motion.div 
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
                 />
               )}
             </button>

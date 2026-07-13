@@ -44,7 +44,7 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'upload': return <Upload className="w-4 h-4 text-emerald-500" />;
+      case 'upload': return <Upload className="w-4 h-4 text-accent-ink" />;
       case 'chat': return <MessageSquare className="w-4 h-4 text-blue-500" />;
       case 'quiz': return <ListChecks className="w-4 h-4 text-amber-500" />;
       case 'flashcard': return <Brain className="w-4 h-4 text-rose-500" />;
@@ -72,7 +72,7 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
           >
             <div className="p-8 flex items-center justify-between border-b border-border">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-indigo-600/10 rounded-xl flex items-center justify-center border border-indigo-500/20 text-indigo-500">
+                <div className="w-10 h-10 bg-accent-soft rounded-xl flex items-center justify-center border border-accent/30 text-accent-ink">
                   <History className="w-5 h-5" />
                 </div>
                 <div>
@@ -108,14 +108,14 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
                     className="flex gap-5 group"
                   >
                     <div className="flex flex-col items-center gap-2">
-                      <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center ring-1 ring-border group-hover:ring-indigo-500/30 transition-all shadow-sm shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center ring-1 ring-border group-hover:ring-accent/30 transition-all shadow-sm shrink-0">
                         {getIcon(activity.type)}
                       </div>
                       <div className="w-0.5 h-full bg-border rounded-full group-last:hidden" />
                     </div>
                     <div className="flex-1 pt-1 pb-6 space-y-1">
                       <div className="flex items-center justify-between gap-4">
-                        <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest bg-indigo-500/5 px-2 py-0.5 rounded-md border border-indigo-500/10">
+                        <span className="text-[10px] font-bold text-accent-ink bg-accent-soft px-2 py-0.5 rounded-md border border-accent/20">
                           {activity.type}
                         </span>
                         <div className="flex items-center gap-1.5 text-[9px] font-mono text-muted-foreground">
@@ -133,7 +133,7 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
             </div>
 
             <div className="p-8 border-t border-border bg-muted/10">
-              <p className="text-[9px] text-center text-muted-foreground uppercase tracking-[0.2em] font-bold">
+              <p className="text-[9px] text-center text-muted-foreground font-bold">
                 End-to-End Activity Encryption Active
               </p>
             </div>

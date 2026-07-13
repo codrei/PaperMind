@@ -84,7 +84,7 @@ Return ONLY the JSON.`;
   const sections = [
     { title: 'Abstract', icon: Info, content: summaryData.abstract, color: 'text-blue-400' },
     { title: 'Methodology', icon: Workflow, content: summaryData.methodology, color: 'text-purple-400' },
-    { title: 'Key Contributions', icon: Target, isList: true, content: summaryData.keyContributions, color: 'text-emerald-400' },
+    { title: 'Key Contributions', icon: Target, isList: true, content: summaryData.keyContributions, color: 'text-accent-ink' },
     { title: 'Results', icon: CheckCircle2, content: summaryData.results, color: 'text-amber-400' },
     { title: 'Limitations', icon: ShieldAlert, content: summaryData.limitations, color: 'text-red-400' },
     { title: 'Future Work', icon: Lightbulb, content: summaryData.futureWork, color: 'text-blue-400' },
@@ -94,8 +94,8 @@ Return ONLY the JSON.`;
     <div className="p-4 sm:p-10 max-w-5xl mx-auto space-y-8 sm:space-y-12 pb-24 sm:pb-32">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-6 sm:pb-8 gap-4">
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600/10 rounded-full flex items-center justify-center border border-indigo-500/20 shadow-inner">
-            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent-soft rounded-full flex items-center justify-center border border-accent/30 shadow-inner">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent-ink" />
           </div>
           <div className="space-y-0.5 sm:space-y-1">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground font-serif">Synthesized Analysis</h2>
@@ -103,7 +103,7 @@ Return ONLY the JSON.`;
           </div>
         </div>
         <div className="text-left sm:text-right">
-           <span className="px-2.5 sm:px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[8px] sm:text-[10px] font-bold rounded-full border border-emerald-500/20 uppercase tracking-widest">Verified Grounding</span>
+           <span className="px-2.5 sm:px-3 py-1 bg-accent-soft text-accent-ink dark:text-accent-ink text-[8px] sm:text-[10px] font-bold rounded-full border border-accent/30">Verified Grounding</span>
         </div>
       </div>
 
@@ -114,20 +114,20 @@ Return ONLY the JSON.`;
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1, duration: 0.4 }}
             key={section.title} 
-            className="bg-card border border-border p-6 sm:p-8 rounded-2xl sm:rounded-3xl hover:border-indigo-500/30 transition-all space-y-4 sm:space-y-6 shadow-sm group"
+            className="bg-card border border-border p-6 sm:p-8 rounded-2xl sm:rounded-xl hover:border-accent/30 transition-all space-y-4 sm:space-y-6 shadow-sm group"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <div className="p-2 sm:p-2.5 bg-muted rounded-xl group-hover:ring-2 group-hover:ring-indigo-500/20 transition-all">
+              <div className="p-2 sm:p-2.5 bg-muted rounded-xl group-hover:ring-2 group-hover:ring-accent/25 transition-all">
                 <section.icon className={cn("w-4 h-4 sm:w-5 sm:h-5", section.color)} />
               </div>
-              <h3 className="font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border flex-1 pb-1">{section.title}</h3>
+              <h3 className="font-bold text-[9px] sm:text-[10px] text-muted-foreground border-b border-border flex-1 pb-1">{section.title}</h3>
             </div>
             
             {section.isList ? (
               <ul className="space-y-3 sm:space-y-4">
                 {Array.isArray(section.content) && section.content.map((item: string, i: number) => (
                   <li key={i} className="flex items-start gap-3 sm:gap-4 text-xs sm:text-sm text-foreground/80 leading-relaxed font-serif">
-                    <div className="w-1 h-1 rounded-full bg-indigo-500 mt-2 sm:mt-2.5 shrink-0" />
+                    <div className="w-1 h-1 rounded-full bg-accent mt-2 sm:mt-2.5 shrink-0" />
                     {item}
                   </li>
                 ))}

@@ -54,14 +54,14 @@ Return ONLY the JSON.`;
     { title: 'Implementation Difficulty', icon: Construction, content: [data.difficulty], color: 'text-orange-400' },
     { title: 'Possible Improvements', icon: Lightbulb, content: data.improvements, color: 'text-yellow-400' },
     { title: 'Related Directions', icon: Compass, content: data.directions, color: 'text-blue-400' },
-    { title: 'Real-world Applications', icon: Globe, content: data.applications, color: 'text-emerald-400' },
+    { title: 'Real-world Applications', icon: Globe, content: data.applications, color: 'text-accent-ink' },
   ];
 
   return (
     <div className="p-10 max-w-5xl mx-auto space-y-12 pb-32">
       <div className="flex items-center gap-5 border-b border-border pb-8">
-        <div className="w-12 h-12 bg-indigo-600/10 rounded-full flex items-center justify-center border border-indigo-500/20 shadow-inner">
-          <Sparkles className="w-6 h-6 text-indigo-500" />
+        <div className="w-12 h-12 bg-accent-soft rounded-full flex items-center justify-center border border-accent/30 shadow-inner">
+          <Sparkles className="w-6 h-6 text-accent-ink" />
         </div>
         <div className="space-y-1">
           <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Paper Intelligence</h2>
@@ -75,13 +75,13 @@ Return ONLY the JSON.`;
             initial={{ opacity: 0, x: idx % 2 === 0 ? -15 : 15 }}
             animate={{ opacity: 1, x: 0 }}
             key={section.title} 
-            className="bg-card border border-border p-8 rounded-3xl space-y-6 hover:border-indigo-500/30 transition-all group shadow-sm"
+            className="bg-card border border-border p-8 rounded-xl space-y-6 hover:border-accent/30 transition-all group shadow-sm"
           >
             <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-muted rounded-xl group-hover:text-indigo-500 transition-colors">
+              <div className="p-2.5 bg-muted rounded-xl group-hover:text-accent-ink transition-colors">
                 <section.icon className={cn("w-5 h-5", section.color)} />
               </div>
-              <h3 className="font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border flex-1 pb-1">{section.title}</h3>
+              <h3 className="font-bold text-[10px] text-muted-foreground border-b border-border flex-1 pb-1">{section.title}</h3>
             </div>
             <ul className="space-y-4">
               {section.content.map((item: string, i: number) => (

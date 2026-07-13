@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createContext, useContext } from 'react';
 import { auth, db } from './lib/firebase';
 import { onAuthStateChanged, User, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
-import { LogIn, Loader2 } from 'lucide-react';
+import { LogIn, Loader2, Check } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface AuthContextType {
@@ -70,52 +70,53 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-background text-foreground">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-accent-ink" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-background text-foreground p-4">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full text-center space-y-12"
+      <div className="flex items-center justify-center min-h-screen bg-background text-foreground p-4 sm:p-6">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="w-full max-w-4xl grid md:grid-cols-2 rounded-xl border border-border bg-card overflow-hidden shadow-sm"
         >
-          <div className="space-y-6">
-            <div className="flex justify-center">
-              <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center font-bold text-3xl text-white shadow-2xl shadow-indigo-500/20">P</div>
+          {/* Left — the editorial pitch */}
+          <div className="p-8 sm:p-12 flex flex-col justify-center bg-background border-b md:border-b-0 md:border-r border-border">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-9 h-9 bg-accent text-accent-fg rounded-lg flex items-center justify-center font-serif font-semibold text-xl">P</div>
+              <span className="font-serif text-xl font-semibold text-foreground">PaperMind</span>
             </div>
-            <h1 className="text-5xl font-bold tracking-tight text-foreground font-serif">
-              PaperMind AI
+            <h1 className="font-serif text-3xl sm:text-4xl font-semibold leading-tight text-foreground text-balance max-w-[15ch]">
+              Read dense research papers, faster.
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Synthesize, learn, and master complex academic papers with generative intelligence.
+            <p className="text-muted-foreground mt-4 leading-relaxed max-w-[42ch]">
+              Upload a paper and get a clear summary, a chat that answers from the paper&apos;s own text, and flashcards and quizzes to study from.
             </p>
+            <div className="flex flex-col gap-2.5 mt-8 pt-6 border-t border-border">
+              {['Structured summaries', 'Grounded chat', 'Flashcards & quizzes'].map((f) => (
+                <div key={f} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                  <Check className="w-4 h-4 text-accent-ink shrink-0" strokeWidth={2.5} />
+                  {f}
+                </div>
+              ))}
+            </div>
           </div>
-          
-          <button
-            onClick={signIn}
-            className="flex items-center justify-center gap-3 w-full py-4 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-500/30"
-          >
-            <LogIn className="w-5 h-5" />
-            Continue with Google
-          </button>
-          
-          <div className="grid grid-cols-3 gap-8 pt-10 border-t border-border">
-            <div className="text-center space-y-1">
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-bold">PDF</div>
-              <div className="text-lg font-serif">Library</div>
-            </div>
-            <div className="text-center space-y-1">
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-bold">RAG</div>
-              <div className="text-lg font-serif">Retrieval</div>
-            </div>
-            <div className="text-center space-y-1">
-              <div className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-bold">LLM</div>
-              <div className="text-lg font-serif">Analysis</div>
-            </div>
+
+          {/* Right — sign in */}
+          <div className="p-8 sm:p-12 flex flex-col justify-center gap-4">
+            <p className="text-sm text-muted-foreground text-center">Sign in to your library</p>
+            <button
+              onClick={signIn}
+              className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-accent text-accent-fg font-semibold rounded-lg hover:bg-accent-hover transition-colors"
+            >
+              <LogIn className="w-5 h-5" />
+              Continue with Google
+            </button>
+            <p className="text-xs text-muted-foreground/70 text-center">Your papers are private to your account.</p>
           </div>
         </motion.div>
       </div>

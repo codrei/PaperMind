@@ -78,7 +78,7 @@ function MainApp({ theme, toggleTheme }: { theme: 'dark' | 'light', toggleTheme:
       <main className="flex-1 relative overflow-auto bg-background flex flex-col">
         <div className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-30">
           <div className="flex items-center gap-2" onClick={() => setSelectedPaperId(null)}>
-            <div className="bg-indigo-600 w-7 h-7 rounded-lg flex items-center justify-center font-bold text-white text-xs">P</div>
+            <div className="bg-accent w-7 h-7 rounded-lg flex items-center justify-center font-bold text-accent-fg text-xs">P</div>
             <span className="font-bold text-lg font-serif">PaperMind</span>
           </div>
           <button 
