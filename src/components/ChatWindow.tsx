@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Paper, ChatMessage } from '../types';
 import { Send, Bot, User as UserIcon, Loader2, Info, Quote } from 'lucide-react';
 import { db, logActivity } from '../lib/firebase';
-import { ai, MODELS, generateEmbeddings, cosineSimilarity } from '../lib/gemini';
+import { generateText, rankChunks } from '../lib/gemini';
 import { collection, query, where, getDocs, addDoc, orderBy, limit, onSnapshot } from 'firebase/firestore';
 import { useAuth } from '../AuthWrapper';
 import { cn } from '../lib/utils';
@@ -65,13 +65,11 @@ export function ChatWindow({ paper }: ChatWindowProps) {
       const chunksSnapshot = await getDocs(collection(db, `papers/${paper.id}/chunks`));
       const chunks = chunksSnapshot.docs.map(doc => doc.data());
       
-      // b. Pick relevant context (Simple keyword or similarity?)
-      // Since we don't have stored embeddings yet for every chunk (we'd need to generate them),
-      // we'll use a high-context Gemini call if it's small, or simple keyword search for now.
-      // ACTUALLY, let's try to do a real similarity if we can.
-      // For this demo, we'll take top 10 chunks as context for simplicity or just the most relevant ones.
-      
-      const context = chunks.slice(0, 10).map(c => c.content).join("\n\n");
+      // b. Retrieval: rank every chunk against the question, ground on the top 8
+      const context = rankChunks(
+        userMessage,
+        chunks.map((c) => c.content as string),
+      ).join("\n\n");
 
       // 3. Call Gemini
       const prompt = `You are a Research Assistant helping a student understand a research paper titled "${paper.title}".
@@ -87,10 +85,8 @@ Instructions:
 - Use clear, academic yet accessible language.
 - Format with markdown.`;
 
-      const model = ai.getGenerativeModel({ model: MODELS.text });
-      const result = await model.generateContent(prompt);
-      const geminiResponse = await result.response;
-      const assistantMessage = geminiResponse.text() || "I'm sorry, I couldn't process that.";
+      const assistantMessage =
+        (await generateText(prompt)) || "I'm sorry, I couldn't process that.";
 
       // 4. Save assistant message
       await addDoc(collection(db, `papers/${paper.id}/messages`), {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Paper } from '../types';
 import { Sparkles, Loader2, Lightbulb, Compass, Globe, Construction } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { ai, MODELS } from '../lib/gemini';
+import { generateText } from '../lib/gemini';
 import { db } from '../lib/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { motion } from 'motion/react';
@@ -32,13 +32,9 @@ JSON structure:
 }
 Return ONLY the JSON.`;
 
-        const response = await ai.models.generateContent({
-          model: MODELS.text,
-          contents: prompt,
-          config: { responseMimeType: "application/json" }
-        });
+        const text = await generateText(prompt, { json: true });
 
-        setData(JSON.parse(response.text || '{}'));
+        setData(JSON.parse(text || '{}'));
       } catch (e) { console.error(e); }
       finally { setLoading(false); }
     };

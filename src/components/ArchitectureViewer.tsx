@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Paper } from '../types';
 import { Activity, Loader2, Box, Network, Cpu } from 'lucide-react';
-import { ai, MODELS } from '../lib/gemini';
+import { generateText } from '../lib/gemini';
 import { db } from '../lib/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'motion/react';
@@ -36,10 +36,7 @@ ${content}
 Focus exclusively on details related to ${activeCategory}. Use markdown formatting.`;
         }
 
-        const model = ai.getGenerativeModel({ model: MODELS.text });
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        const text = await generateText(prompt);
 
         setData(text || null);
       } catch (e) { console.error(e); }

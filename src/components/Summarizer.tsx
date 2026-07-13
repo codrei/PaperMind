@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Paper } from '../types';
 import { Sparkles, Loader2, CheckCircle2, AlertCircle, Info, Target, Lightbulb, Workflow, ShieldAlert } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { ai, MODELS } from '../lib/gemini';
+import { generateText } from '../lib/gemini';
 import { db, logActivity } from '../lib/firebase';
 import { doc, updateDoc, getDocs, collection } from 'firebase/firestore';
 import { useAuth } from '../AuthWrapper';
@@ -48,13 +48,7 @@ JSON structure:
 }
 Return ONLY the JSON.`;
 
-      const model = ai.getGenerativeModel({ 
-        model: MODELS.text,
-        generationConfig: { responseMimeType: "application/json" }
-      });
-      const result = await model.generateContent(prompt);
-      const geminiResponse = await result.response;
-      const text = geminiResponse.text();
+      const text = await generateText(prompt, { json: true });
 
       const analysisResult = JSON.parse(text || '{}');
       setSummaryData(analysisResult);

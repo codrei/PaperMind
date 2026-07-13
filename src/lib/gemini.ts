@@ -1,34 +1,51 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Import from import.meta.env for Vite compatibility in production
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 if (!apiKey) {
   console.warn("VITE_GEMINI_API_KEY is not set. AI features will not work.");
 }
 
-export const ai = new GoogleGenAI({ apiKey: apiKey || '' }) as any;
+export const ai = new GoogleGenAI({ apiKey: apiKey || '' });
 
+// Model IDs verified against the Gemini ListModels endpoint (2026-07).
 export const MODELS = {
-  text: "gemini-3-flash-preview",
+  text: "gemini-3.5-flash",
   pro: "gemini-3.1-pro-preview",
-  embedding: "gemini-embedding-2-preview"
+  embedding: "gemini-embedding-001",
 };
 
-export async function generateEmbeddings(text: string) {
-  try {
-    const model = ai.getGenerativeModel({ model: MODELS.embedding });
-    const result = await model.embedContent(text);
-    return result.embedding.values;
-  } catch (e) {
-    console.error("Embedding error:", e);
-    return new Array(768).fill(0); // Fallback
-  }
+/** Single entry point for text generation on the current @google/genai SDK. */
+export async function generateText(
+  prompt: string,
+  opts: { json?: boolean; model?: string } = {},
+): Promise<string> {
+  const response = await ai.models.generateContent({
+    model: opts.model ?? MODELS.text,
+    contents: prompt,
+    ...(opts.json ? { config: { responseMimeType: "application/json" } } : {}),
+  });
+  return response.text ?? "";
 }
 
-export function cosineSimilarity(vec1: number[], vec2: number[]) {
-  const dotProduct = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
-  const mag1 = Math.sqrt(vec1.reduce((acc, val) => acc + val * val, 0));
-  const mag2 = Math.sqrt(vec2.reduce((acc, val) => acc + val * val, 0));
-  return dotProduct / (mag1 * mag2);
+/**
+ * Lexical retrieval: rank chunks by how many of the query's terms they
+ * contain and return the top k as grounding context.
+ */
+export function rankChunks(query: string, chunks: string[], k = 8): string[] {
+  const terms: string[] = query.toLowerCase().match(/[a-z0-9]{3,}/g) ?? [];
+  if (terms.length === 0) return chunks.slice(0, k);
+
+  return chunks
+    .map((content, index) => {
+      const haystack = content.toLowerCase();
+      const score = terms.reduce(
+        (acc, term) => acc + (haystack.includes(term) ? 1 : 0),
+        0,
+      );
+      return { content, score, index };
+    })
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, k)
+    .map((entry) => entry.content);
 }

@@ -4,7 +4,7 @@ import {
   Brain, Loader2, RefreshCw, Layers, 
   RotateCw, ChevronLeft, ChevronRight, Play 
 } from 'lucide-react';
-import { ai, MODELS } from '../lib/gemini';
+import { generateText } from '../lib/gemini';
 import { db, logActivity } from '../lib/firebase';
 import { collection, addDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { useAuth } from '../AuthWrapper';
@@ -55,13 +55,7 @@ JSON structure:
 ]
 Return ONLY the JSON array.`;
 
-      const model = ai.getGenerativeModel({ 
-        model: MODELS.text,
-        generationConfig: { responseMimeType: "application/json" }
-      });
-      const result = await model.generateContent(prompt);
-      const geminiResponse = await result.response;
-      const text = geminiResponse.text();
+      const text = await generateText(prompt, { json: true });
 
       const cardsData = JSON.parse(text || '[]');
       

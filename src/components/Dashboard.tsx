@@ -10,7 +10,6 @@ import { useAuth } from '../AuthWrapper';
 import { toast } from 'sonner';
 import { motion } from 'motion/react';
 
-// Set up PDF.js worker (no longer needed client-side)
 
 interface DashboardProps {
   papers: Paper[];
@@ -41,47 +40,10 @@ export function Dashboard({ papers, isLoading, onSelectPaper }: DashboardProps) 
     const toastId = toast.loading(`Processing "${file.name}"...`);
 
     try {
-      console.log("Checking API health...");
-      const healthCheck = await fetch('/api/health').catch(() => null);
-      if (!healthCheck || !healthCheck.ok) {
-        console.error("API is not responding correctly");
-      } else {
-        console.log("API is healthy");
-      }
-
-      // 1. Process File on SERVER for better mobile reliability
-      const formData = new FormData();
-      formData.append('file', file);
-
-      console.log(`[Dashboard] Uploading file ${file.name} to /api/process-file...`);
-      const response = await fetch(`${window.location.origin}/api/process-file`, {
-        method: 'POST',
-        body: formData,
-        // Ensure no cache to avoid stale results
-        cache: 'no-cache'
-      });
-
-      console.log(`[Dashboard] Response status: ${response.status} ${response.statusText}`);
-      
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.error("[Dashboard] Non-JSON response received:", text.slice(0, 1000));
-        
-        if (response.status === 413) {
-          throw new Error("The file is too large for the server to process. Please try a smaller file.");
-        }
-        
-        throw new Error(`The server returned an unexpected format (${response.status}). This usually indicates a connection issue or an unsupported file. Details: ${text.slice(0, 50).replace(/<[^>]*>?/gm, '')}...`);
-      }
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || `Server error: ${response.status}`);
-      }
-
-      const { chunks, metadata } = result;
+      // 1. Extract text in the browser — no upload server needed.
+      // Lazy-loaded so the PDF engine isn't in the initial bundle.
+      const { extractFileText } = await import('../lib/extract');
+      const { chunks, metadata } = await extractFileText(file);
 
       if (!chunks || chunks.length === 0) {
         throw new Error("No readable text could be extracted from this PDF.");
