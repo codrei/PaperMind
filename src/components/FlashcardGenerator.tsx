@@ -70,7 +70,7 @@ Return ONLY the JSON array.`;
         newCards.push({ id: docRef.id, ...card, paperId: paper.id, userId: user?.uid!, createdAt: Date.now() });
       }
 
-      await logActivity(user!.uid, 'flashcard', `Constructed flashcards for ${paper.title}`, paper.id);
+      await logActivity(user!.uid, 'flashcard', `Made flashcards for ${paper.title}`, paper.id);
       setFlashcards([...newCards, ...flashcards]);
       setIsReviewMode(true);
     } catch (error) {

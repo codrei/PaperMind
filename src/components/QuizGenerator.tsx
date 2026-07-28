@@ -77,7 +77,7 @@ Return ONLY the JSON.`;
 
       const newQuiz = { id: docRef.id, ...quizData } as Quiz;
       setQuizzes([newQuiz, ...quizzes]);
-      await logActivity(user!.uid, 'quiz', `Generated quiz for ${paper.title}`, paper.id);
+      await logActivity(user!.uid, 'quiz', `Made a quiz for ${paper.title}`, paper.id);
       startQuiz(newQuiz);
     } catch (error) {
       console.error(error);

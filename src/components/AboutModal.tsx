@@ -97,14 +97,16 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                       <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">3rd Year CS Student @ NU Lipa</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-[10px] text-muted-foreground font-medium">Build v1.0.5</p>
-                  </div>
                 </div>
 
+                {/* Marco: swap this for your own words whenever you like — it
+                    should sound like you, not like a product page. */}
                 <div className="bg-accent-soft border border-accent/20 p-5 rounded-2xl">
-                  <p className="text-xs text-muted-foreground leading-relaxed italic font-serif">
-                    "I built PaperMind as a tool to help fellow students and researchers navigate the overwhelming wave of academic literature. My goal is to save researchers time by synthesizing complex technical manuscripts into actionable insights."
+                  <p className="text-xs text-muted-foreground leading-relaxed font-serif">
+                    I built PaperMind as a student project. Reading research
+                    papers for class was slow going, so I wanted something that
+                    could explain a paper in plain language and then check
+                    whether I&apos;d actually understood it.
                   </p>
                 </div>
               </div>
@@ -112,8 +114,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <div className="pt-4">
                 <div className="bg-muted/30 p-6 rounded-2xl border border-border">
                   <p className="text-xs text-center text-muted-foreground leading-relaxed">
-                    Designed for researchers, students, and engineers. <br/>
-                    <span className="font-bold text-foreground">PaperMind</span> empowers you to master complex literature at 10x speed.
+                    Built with React, TypeScript, and the Google Gemini API.
                   </p>
                 </div>
               </div>

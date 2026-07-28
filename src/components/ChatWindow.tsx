@@ -97,7 +97,7 @@ Instructions:
         createdAt: Date.now(),
       });
       
-      await logActivity(user.uid, 'chat', `Inquired about ${paper.title}`, paper.id);
+      await logActivity(user.uid, 'chat', `Asked about ${paper.title}`, paper.id);
 
     } catch (error) {
       console.error(error);

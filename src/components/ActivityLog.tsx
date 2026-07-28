@@ -134,7 +134,7 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
 
             <div className="p-8 border-t border-border bg-muted/10">
               <p className="text-[9px] text-center text-muted-foreground font-bold">
-                End-to-End Activity Encryption Active
+                Only you can see your activity
               </p>
             </div>
           </motion.div>
