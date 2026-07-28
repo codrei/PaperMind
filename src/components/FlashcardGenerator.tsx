@@ -172,8 +172,8 @@ Return ONLY the JSON array.`;
             <Brain className="w-6 h-6 text-accent-ink" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Flashcard Retrieval</h2>
-            <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Mnemonic Reinforcement Engine</p>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Flashcards</h2>
+            <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Generated from your paper</p>
           </div>
         </div>
         <button 
@@ -203,9 +203,9 @@ Return ONLY the JSON array.`;
             >
               <div className="flex items-center justify-between">
                 <div className="space-y-4">
-                  <span className="px-3 py-1 rounded-full bg-accent-soft text-accent-ink dark:text-accent-ink text-[10px] font-bold border border-accent/30">Active Study Session</span>
+                  <span className="px-3 py-1 rounded-full bg-accent-soft text-accent-ink dark:text-accent-ink text-[10px] font-bold border border-accent/30">Study session</span>
                   <h3 className="text-4xl font-bold font-serif text-foreground line-clamp-1">{paper.title}</h3>
-                  <p className="text-xs text-muted-foreground font-mono tracking-tighter uppercase">{flashcards.length} Mnemic Vectors Synthesized</p>
+                  <p className="text-xs text-muted-foreground font-mono tracking-tighter uppercase">{flashcards.length} cards</p>
                 </div>
                 <div className="w-20 h-20 bg-accent rounded-xl rotate-3 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-0 transition-all">
                   <Play className="w-10 h-10 text-accent-fg ml-1.5" />

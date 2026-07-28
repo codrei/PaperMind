@@ -65,7 +65,7 @@ export function PaperDetail({ paper, onBack }: PaperDetailProps) {
           </button>
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-               <span className="text-[9px] sm:text-[10px] uppercase font-bold text-muted-foreground tracking-[0.2em] truncate">Research Manuscript</span>
+               <span className="text-[9px] sm:text-[10px] uppercase font-bold text-muted-foreground tracking-[0.2em] truncate">Paper</span>
             </div>
             <h2 className="font-bold text-lg sm:text-xl truncate pr-4 text-foreground font-serif tracking-tight">{paper.title}</h2>
           </div>

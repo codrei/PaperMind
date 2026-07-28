@@ -77,7 +77,7 @@ export function ActivityLog({ isOpen, onClose }: ActivityLogProps) {
                 </div>
                 <div>
                   <h2 className="text-xl font-bold font-serif">Research Activity</h2>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-0.5">Chronological Vector Log</p>
+                  <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-0.5">What you've done recently</p>
                 </div>
               </div>
               <button 

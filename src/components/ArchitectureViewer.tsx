@@ -48,7 +48,7 @@ Focus exclusively on details related to ${activeCategory}. Use markdown formatti
   if (loading && !data) return (
     <div className="flex flex-col items-center justify-center h-full text-zinc-500 gap-4 py-32">
       <Loader2 className="w-8 h-8 animate-spin text-accent-ink" />
-      <p className="text-sm">Synthesizing {activeCategory || "architecture"} data...</p>
+      <p className="text-sm">Loading {activeCategory || "architecture"} details…</p>
     </div>
   );
 
@@ -65,8 +65,8 @@ Focus exclusively on details related to ${activeCategory}. Use markdown formatti
           <Activity className="w-6 h-6" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Structural Blueprint</h2>
-          <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Deconstructed Model Architecture</p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Paper structure</h2>
+          <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">How the paper is put together</p>
         </div>
       </div>
 
@@ -115,7 +115,7 @@ Focus exclusively on details related to ${activeCategory}. Use markdown formatti
           >
             {data ? data.split('\n').map((line, i) => (
               <p key={i} className="mb-4 last:mb-0">{line}</p>
-            )) : <p className="text-muted-foreground">Synthesizing architecture data...</p>}
+            )) : <p className="text-muted-foreground">Loading architecture details…</p>}
           </motion.div>
         </AnimatePresence>
       </div>

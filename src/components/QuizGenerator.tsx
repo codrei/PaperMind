@@ -121,9 +121,9 @@ Return ONLY the JSON.`;
            </div>
            
            <div className="space-y-3">
-             <h2 className="text-4xl font-bold font-serif text-foreground">Synthesis Verified</h2>
-             <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-muted-foreground">Comprehension Quotient: {(score / activeQuiz.questions.length * 100).toFixed(0)}%</p>
-             <p className="text-muted-foreground font-medium">You identified {score} out of {activeQuiz.questions.length} logical vectors correctly.</p>
+             <h2 className="text-4xl font-bold font-serif text-foreground">Quiz complete</h2>
+             <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-muted-foreground">Score: {(score / activeQuiz.questions.length * 100).toFixed(0)}%</p>
+             <p className="text-muted-foreground font-medium">You got {score} out of {activeQuiz.questions.length} correct.</p>
            </div>
            
            <div className="flex gap-6">
@@ -150,16 +150,16 @@ Return ONLY the JSON.`;
       <div className="p-10 max-w-3xl mx-auto space-y-10">
         <div className="flex items-center justify-between border-b border-border pb-6">
           <button onClick={() => setActiveQuiz(null)} className="text-muted-foreground hover:text-foreground text-[10px] font-bold flex items-center gap-2 transition-colors">
-            <ChevronRight className="w-4 h-4 rotate-180" /> Abandon Quiz
+            <ChevronRight className="w-4 h-4 rotate-180" /> Back to quizzes
           </button>
           <div className="text-[10px] font-bold text-muted-foreground font-mono">
-            Vector {currentQuestionIdx + 1} / {activeQuiz.questions.length}
+            Question {currentQuestionIdx + 1} of {activeQuiz.questions.length}
           </div>
         </div>
 
         <div className="space-y-8">
           <div className="space-y-3">
-             <span className="text-[10px] text-accent-ink font-bold">Inquiry Vector</span>
+             <span className="text-[10px] text-accent-ink font-bold">Question</span>
              <h3 className="text-2xl font-bold leading-tight text-foreground font-serif">{question.question}</h3>
           </div>
           
@@ -195,7 +195,7 @@ Return ONLY the JSON.`;
             onClick={handleNext}
             className="flex items-center gap-3 px-10 py-4 bg-accent hover:bg-accent-hover disabled:opacity-50 text-accent-fg rounded-full font-bold transition-all shadow-xl text-[10px]"
           >
-            {currentQuestionIdx === activeQuiz.questions.length - 1 ? 'Finalize Synthesis' : 'Next Vector'}
+            {currentQuestionIdx === activeQuiz.questions.length - 1 ? 'Finish quiz' : 'Next question'}
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -211,8 +211,8 @@ Return ONLY the JSON.`;
             <ListChecks className="w-6 h-6 text-accent-ink" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Comprehension Vectors</h2>
-            <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Adaptive Practice Assignments</p>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Practice quiz</h2>
+            <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Generated from your paper</p>
           </div>
         </div>
         <button 
@@ -242,8 +242,8 @@ Return ONLY the JSON.`;
                   <ListChecks className="w-6 h-6 text-muted-foreground group-hover:text-accent-ink transition-colors" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-foreground font-serif">{quiz.title || 'Paper Comprehension Quiz'}</h3>
-                  <p className="text-[10px] text-muted-foreground font-mono mt-1">{quiz.questions.length} Discrete Logical Questions</p>
+                  <h3 className="font-bold text-xl text-foreground font-serif">{quiz.title || 'Practice quiz'}</h3>
+                  <p className="text-[10px] text-muted-foreground font-mono mt-1">{quiz.questions.length} questions</p>
                 </div>
               </div>
               <button 

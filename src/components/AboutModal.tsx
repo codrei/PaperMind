@@ -40,7 +40,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 </div>
                 <div>
                   <h2 className="text-3xl font-bold font-serif">About PaperMind</h2>
-                  <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground mt-1">AI Research Intelligence Engine</p>
+                  <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground mt-1">A study tool for research papers</p>
                 </div>
               </div>
 
@@ -48,40 +48,40 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-accent-ink">
                     <Brain className="w-5 h-5" />
-                    <h3 className="font-bold text-[10px]">Neural Synthesis</h3>
+                    <h3 className="font-bold text-[10px]">Summaries</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    PaperMind uses advanced language models to deconstruct complex research papers into digestible, high-level insights.
+                    Upload a paper and get a plain-language summary of what it says — the abstract, the method, the findings, and why they matter.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-accent-ink">
                     <Target className="w-5 h-5" />
-                    <h3 className="font-bold text-[10px]">Adaptive Practice</h3>
+                    <h3 className="font-bold text-[10px]">Quizzes & flashcards</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Verify your understanding through dynamically generated quizzes and flashcards tailored specifically to your data.
+                    Check what you actually understood, with quizzes and flashcards made from the paper you uploaded.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-amber-500">
                     <Zap className="w-5 h-5" />
-                    <h3 className="font-bold text-[10px]">Architecture Mapping</h3>
+                    <h3 className="font-bold text-[10px]">Paper structure</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Automatically map model architectures, input spaces, and compute costs mentioned in technical manuscripts.
+                    See how the paper is organised, plus the models, datasets, and setup it describes.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-rose-500">
                     <BookOpen className="w-5 h-5" />
-                    <h3 className="font-bold text-[10px]">Persistent Knowledge</h3>
+                    <h3 className="font-bold text-[10px]">Your library</h3>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Your library is stored securely, allowing you to return to your research vectors and study materials at any time.
+                    Your papers and study materials are saved to your account, so you can come back to them anytime.
                   </p>
                 </div>
               </div>
@@ -94,7 +94,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-foreground">Marco Andrei Belen</h4>
-                      <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">2nd Year CS Student @ NU Lipa</p>
+                      <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">3rd Year CS Student @ NU Lipa</p>
                     </div>
                   </div>
                   <div className="text-right">

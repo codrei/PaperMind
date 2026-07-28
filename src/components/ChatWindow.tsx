@@ -130,7 +130,7 @@ Instructions:
               <p className="text-xs font-bold leading-loose">Deep analysis of "{paper.title}" finalized. Inquire within.</p>
             </div>
             <div className="grid grid-cols-1 gap-3 w-full pt-6">
-               {["What is the primary contribution?", "Deconstruct the methodology", "Synthesize the results"].map(q => (
+               {["What is the primary contribution?", "Explain the methodology", "Summarise the results"].map(q => (
                  <button 
                   key={q}
                   onClick={() => setInput(q)}
@@ -174,7 +174,7 @@ Instructions:
               {message.role === 'assistant' && (
                 <div className="mt-4 pt-3 border-t border-border flex items-center gap-2">
                    <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
-                   <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest font-mono">Grounded Logic</span>
+                   <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest font-mono">Answered from the paper</span>
                 </div>
               )}
             </div>

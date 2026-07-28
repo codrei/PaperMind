@@ -64,8 +64,8 @@ Return ONLY the JSON.`;
           <Sparkles className="w-6 h-6 text-accent-ink" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Paper Intelligence</h2>
-          <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Cross-Domain Synthesis & Future Vectors</p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground font-serif">Insights</h2>
+          <p className="text-xs uppercase font-bold tracking-[0.25em] text-muted-foreground">Connections and open questions</p>
         </div>
       </div>
 
