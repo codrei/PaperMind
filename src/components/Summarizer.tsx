@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Paper } from '../types';
-import { Sparkles, Loader2, CheckCircle2, AlertCircle, Info, Target, Lightbulb, Workflow, ShieldAlert } from 'lucide-react';
+import { Sparkles, CheckCircle2, AlertCircle, Info, Target, Lightbulb, Workflow, ShieldAlert } from 'lucide-react';
+import { GenerationFailed, GenerationLoading } from './GenerationState';
 import { cn } from '../lib/utils';
 import { generateText } from '../lib/gemini';
 import { db, logActivity } from '../lib/firebase';
@@ -16,20 +17,20 @@ export function Summarizer({ paper }: SummarizerProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [summaryData, setSummaryData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (paper.abstract) {
-      setSummaryData(paper);
-    } else {
-      generateSummary();
-    }
-  }, [paper.id]);
-
-  const generateSummary = async () => {
+  const generateSummary = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const chunksSnapshot = await getDocs(collection(db, `papers/${paper.id}/chunks`));
       const content = chunksSnapshot.docs.slice(0, 5).map(doc => doc.data().content).join("\n");
+
+      if (!content.trim()) {
+        setSummaryData(null);
+        setError("There's no readable text saved for this paper yet.");
+        return;
+      }
 
       const prompt = `Analyze the following research paper content and provide a structured summary in JSON format.
       
@@ -51,6 +52,11 @@ Return ONLY the JSON.`;
       const text = await generateText(prompt, { json: true });
 
       const analysisResult = JSON.parse(text || '{}');
+      if (!analysisResult || Object.keys(analysisResult).length === 0) {
+        setSummaryData(null);
+        setError('Nothing came back for this paper. Try again in a moment.');
+        return;
+      }
       setSummaryData(analysisResult);
 
       // Save to Firebase
@@ -63,23 +69,34 @@ Return ONLY the JSON.`;
         await logActivity(user.uid, 'upload', `Summarised ${paper.title}`, paper.id);
       }
 
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
+      setSummaryData(null);
+      setError("Couldn't summarise this paper. Check your connection and try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [paper.id, paper.title, user]);
 
-  if (loading) {
+  useEffect(() => {
+    if (paper.abstract) {
+      setSummaryData(paper);
+      setError(null);
+    } else {
+      generateSummary();
+    }
+  }, [paper.id, paper.abstract, generateSummary]);
+
+  if (loading) return <GenerationLoading message="Reading the paper…" />;
+
+  if (!summaryData) {
     return (
-      <div className="flex flex-col items-center justify-center h-full space-y-4 text-zinc-500">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-        <p className="text-sm font-medium animate-pulse">Reading the paper…</p>
-      </div>
+      <GenerationFailed
+        message={error ?? 'Nothing to show for this paper yet.'}
+        onRetry={generateSummary}
+      />
     );
   }
-
-  if (!summaryData) return null;
 
   const sections = [
     { title: 'Abstract', icon: Info, content: summaryData.abstract, color: 'text-blue-400' },

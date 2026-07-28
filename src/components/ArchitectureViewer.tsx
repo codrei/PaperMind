@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Paper } from '../types';
 import { Activity, Loader2, Box, Network, Cpu } from 'lucide-react';
 import { generateText } from '../lib/gemini';
@@ -6,51 +6,68 @@ import { db } from '../lib/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
+import { GenerationFailed, GenerationLoading } from './GenerationState';
 
 export function ArchitectureViewer({ paper }: { paper: Paper }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  useEffect(() => {
-    const generate = async () => {
-      setLoading(true);
-      try {
-        const chunksSnapshot = await getDocs(collection(db, `papers/${paper.id}/chunks`));
-        const content = chunksSnapshot.docs.slice(0, 5).map(doc => doc.data().content).join("\n");
+  const generate = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const chunksSnapshot = await getDocs(collection(db, `papers/${paper.id}/chunks`));
+      const content = chunksSnapshot.docs.slice(0, 5).map(doc => doc.data().content).join("\n");
 
-        let prompt = "";
-        if (!activeCategory) {
-          prompt = `Explain the model architecture and training pipeline described in this research paper.
-          
+      if (!content.trim()) {
+        setData(null);
+        setError("There's no readable text saved for this paper yet.");
+        return;
+      }
+
+      let prompt = "";
+      if (!activeCategory) {
+        prompt = `Explain the model architecture and training pipeline described in this research paper.
+
 Content:
 ${content}
 
 Provide a detailed, technical explanation suitable for a ML student. Use markdown formatting.`;
-        } else {
-          prompt = `Provide a deep-dive analysis of the **${activeCategory}** aspect of this research paper.
-          
+      } else {
+        prompt = `Provide a deep-dive analysis of the **${activeCategory}** aspect of this research paper.
+
 Content:
 ${content}
 
 Focus exclusively on details related to ${activeCategory}. Use markdown formatting.`;
-        }
+      }
 
-        const text = await generateText(prompt);
+      const text = await generateText(prompt);
 
-        setData(text || null);
-      } catch (e) { console.error(e); }
-      finally { setLoading(false); }
-    };
-    generate();
+      if (!text.trim()) {
+        setData(null);
+        setError(
+          "Nothing came back for this one — the paper may not describe a model architecture.",
+        );
+        return;
+      }
+      setData(text);
+    } catch (e) {
+      console.error(e);
+      setData(null);
+      setError("Couldn't generate this. Check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   }, [paper.id, activeCategory]);
 
-  if (loading && !data) return (
-    <div className="flex flex-col items-center justify-center h-full text-zinc-500 gap-4 py-32">
-      <Loader2 className="w-8 h-8 animate-spin text-accent-ink" />
-      <p className="text-sm">Loading {activeCategory || "architecture"} details…</p>
-    </div>
-  );
+  useEffect(() => {
+    generate();
+  }, [generate]);
+
+  if (loading && !data) return <GenerationLoading message={`Reading the paper for ${activeCategory ?? 'architecture'} details…`} />;
 
   const categories = [
     { label: 'Input Space', icon: Box, id: 'Input Space' },
@@ -107,15 +124,26 @@ Focus exclusively on details related to ${activeCategory}. Use markdown formatti
               <Loader2 className="w-6 h-6 animate-spin text-accent-ink" />
             </motion.div>
           )}
-          <motion.div 
-            key={activeCategory + (data || "")}
+          <motion.div
+            key={activeCategory + (data || error || "")}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-card border border-border p-10 rounded-xl prose dark:prose-invert max-w-none leading-relaxed font-serif text-foreground/80"
           >
-            {data ? data.split('\n').map((line, i) => (
-              <p key={i} className="mb-4 last:mb-0">{line}</p>
-            )) : <p className="text-muted-foreground">Loading architecture details…</p>}
+            {data ? (
+              data.split('\n').map((line, i) => (
+                <p key={i} className="mb-4 last:mb-0">{line}</p>
+              ))
+            ) : error ? (
+              <GenerationFailed message={error} onRetry={generate} />
+            ) : (
+              !loading && (
+                <GenerationFailed
+                  message="Nothing to show for this paper yet."
+                  onRetry={generate}
+                />
+              )
+            )}
           </motion.div>
         </AnimatePresence>
       </div>

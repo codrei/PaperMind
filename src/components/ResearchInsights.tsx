@@ -1,22 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Paper } from '../types';
-import { Sparkles, Loader2, Lightbulb, Compass, Globe, Construction } from 'lucide-react';
+import { Sparkles, Lightbulb, Compass, Globe, Construction } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { generateText } from '../lib/gemini';
 import { db } from '../lib/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { motion } from 'motion/react';
+import { GenerationFailed, GenerationLoading } from './GenerationState';
 
 export function ResearchInsights({ paper }: { paper: Paper }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const generate = async () => {
+  const generate = useCallback(async () => {
       setLoading(true);
+      setError(null);
       try {
         const chunksSnapshot = await getDocs(collection(db, `papers/${paper.id}/chunks`));
         const content = chunksSnapshot.docs.slice(0, 5).map(doc => doc.data().content).join("\n");
+
+        if (!content.trim()) {
+          setData(null);
+          setError("There's no readable text saved for this paper yet.");
+          return;
+        }
 
         const prompt = `Provide research insights for this paper in JSON format.
         
@@ -34,21 +42,36 @@ Return ONLY the JSON.`;
 
         const text = await generateText(prompt, { json: true });
 
-        setData(JSON.parse(text || '{}'));
-      } catch (e) { console.error(e); }
-      finally { setLoading(false); }
-    };
-    generate();
+        const parsed = JSON.parse(text || '{}');
+        if (!parsed || Object.keys(parsed).length === 0) {
+          setData(null);
+          setError('Nothing came back for this paper. Try again in a moment.');
+          return;
+        }
+        setData(parsed);
+      } catch (e) {
+        console.error(e);
+        setData(null);
+        setError("Couldn't generate insights. Check your connection and try again.");
+      } finally {
+        setLoading(false);
+      }
   }, [paper.id]);
 
-  if (loading) return (
-    <div className="flex flex-col items-center justify-center h-full text-zinc-500 gap-4">
-      <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-      <p className="text-sm">Mining field-wide insights...</p>
-    </div>
-  );
+  useEffect(() => {
+    generate();
+  }, [generate]);
 
-  if (!data) return null;
+  if (loading) return <GenerationLoading message="Reading the paper…" />;
+
+  if (!data) {
+    return (
+      <GenerationFailed
+        message={error ?? 'Nothing to show for this paper yet.'}
+        onRetry={generate}
+      />
+    );
+  }
 
   const sections = [
     { title: 'Implementation Difficulty', icon: Construction, content: [data.difficulty], color: 'text-orange-400' },
